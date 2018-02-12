@@ -24,6 +24,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+use RuntimeException;
 
 class Html extends BaseWriter
 {
@@ -561,6 +562,10 @@ class Html extends BaseWriter
 
     private function extendRowsForChartsAndImages(Worksheet $pSheet, $row)
     {
+        if (!extension_loaded('gd')) {
+            throw new RuntimeException('Saving images in html requires gd extension');
+        }
+
         $rowMax = $row;
         $colMax = 'A';
         if ($this->includeCharts) {

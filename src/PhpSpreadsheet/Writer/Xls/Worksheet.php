@@ -19,6 +19,7 @@ use PhpOffice\PhpSpreadsheet\Style\Protection;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Worksheet\SheetView;
 use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+use RuntimeException;
 
 // Original file header of PEAR::Spreadsheet_Excel_Writer_Worksheet (used as the base for this class):
 // -----------------------------------------------------------------------------------------
@@ -2426,6 +2427,10 @@ class Worksheet extends BIFFwriter
      */
     public function processBitmapGd($image)
     {
+        if (!extension_loaded('gd')) {
+            throw new RuntimeException('Processing images requires gd extension');
+        }
+
         $width = imagesx($image);
         $height = imagesy($image);
 

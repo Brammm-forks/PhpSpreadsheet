@@ -7,6 +7,7 @@ use PhpOffice\PhpSpreadsheet\Shared\XMLWriter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 use PhpOffice\PhpSpreadsheet\Writer\Exception as WriterException;
+use RuntimeException;
 
 class ContentTypes extends WriterPart
 {
@@ -177,6 +178,10 @@ class ContentTypes extends WriterPart
      */
     private function getImageMimeType($pFile)
     {
+        if (!extension_loaded('gd')) {
+            throw new RuntimeException('Processing images requires gd extension');
+        }
+
         if (File::fileExists($pFile)) {
             $image = getimagesize($pFile);
 

@@ -3,6 +3,7 @@
 namespace PhpOffice\PhpSpreadsheet\Worksheet;
 
 use PhpOffice\PhpSpreadsheet\Exception as PhpSpreadsheetException;
+use RuntimeException;
 
 class Drawing extends BaseDrawing
 {
@@ -82,6 +83,10 @@ class Drawing extends BaseDrawing
      */
     public function setPath($pValue, $pVerifyFile = true)
     {
+        if (!extension_loaded('gd')) {
+            throw new RuntimeException('Processing drawins requires gd extension');
+        }
+
         if ($pVerifyFile) {
             if (file_exists($pValue)) {
                 $this->path = $pValue;

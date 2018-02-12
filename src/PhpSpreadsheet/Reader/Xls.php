@@ -27,6 +27,7 @@ use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Worksheet\SheetView;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
+use RuntimeException;
 
 // Original file header of ParseXL (used as the base for this class):
 // --------------------------------------------------------------------------------
@@ -1136,6 +1137,10 @@ class Xls extends BaseReader
 
                             // need check because some blip types are not supported by Escher reader such as EMF
                             if ($blip = $BSE->getBlip()) {
+                                if (!extension_loaded('gd')) {
+                                    throw new RuntimeException('Reading images in xls requires gd extension');
+                                }
+
                                 $ih = imagecreatefromstring($blip->getData());
                                 $drawing = new MemoryDrawing();
                                 $drawing->setImageResource($ih);

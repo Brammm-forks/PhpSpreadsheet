@@ -36,7 +36,6 @@
         "php": "^5.6|^7.0",
         "ext-ctype": "*",
         "ext-dom": "*",
-        "ext-gd": "*",
         "ext-iconv": "*",
         "ext-libxml": "*",
         "ext-mbstring": "*",
@@ -49,6 +48,7 @@
         "psr/simple-cache": "^1.0"
     },
     "require-dev": {
+        "ext-gd": "*",
         "tecnickcom/tcpdf": "^6.2",
         "squizlabs/php_codesniffer": "^2.7",
         "phpunit/phpunit": "^5.7",
